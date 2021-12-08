@@ -16,7 +16,7 @@ function PaginationArrows() {
       margin: 0,
     }}>
       <ArrowCircleLeftIcon sx={{ fontSize: 36.5 }} />
-      <Button variant="outlined">Outlined</Button>
+      <Button variant="outlined">Refresh</Button>
       <ArrowCircleRightIcon sx={{ fontSize: 36.5 }} />
     </Container>
   )
