@@ -32,11 +32,8 @@ export const months = [
 ];
 
 export function convertTemp(tempUnit: string, temp: number) {
-  if (tempUnit === '0') {
+  if (tempUnit === '1') {
     return ((9 * temp / 5) + 32);
-  }
-  else if (tempUnit === '1') {
-    return ((temp - 32) * 5 / 9);
   }
   else return temp;
 }

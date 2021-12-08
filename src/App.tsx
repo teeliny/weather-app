@@ -1,9 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
+import styled from '@emotion/styled';
 import TempSelector from './components/TempSelector';
 import PaginationArrows from './components/PaginationArrows';
 import WeatherBox from './components/WeatherBox';
-import { months, convertTemp } from './utils/basicFormatter';
+import { months } from './utils/basicFormatter';
 import data from './mockData.json';
+
+const DisplayDiv = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: '8px';
+  align-items: center;
+`;
 
 interface ISingleStore {
   temp: number;
@@ -21,6 +30,25 @@ interface IStoreData {
 function App() {
   const [tempUnit, setTempUnit] = useState<string>('0');
   const [responseData, setResponseData] = useState<ISingleStore[]>([]);
+  const [displayData, setDisplayData] = useState<ISingleStore[]>([]);
+  const [pageSize, setPageSize] = useState<number>(3);
+  const [pageIndex, setPageIndex] = useState<number>(1);
+
+  useEffect(() => {
+    const sectionData = responseData.slice(pageSize * (pageIndex - 1), pageSize * pageIndex);
+    setDisplayData(sectionData);
+  }, [pageIndex, pageSize, responseData]);
+
+  const handleForwardArrow = () => {
+    if (pageIndex < Math.floor(responseData.length / pageSize)) {
+      setPageIndex(pageIndex + 1);
+    }
+  }
+  const handleBackwardArrow = () => {
+    if (pageIndex > 1) {
+      setPageIndex(pageIndex - 1);
+    }
+  }
 
   useEffect(() => {
     if (data.list.length > 0) {
@@ -33,7 +61,7 @@ function App() {
         const current_date = `${full_date.getDate()} ${months[full_date.getMonth()]}. ${full_date.getFullYear()}`;
         // Create a new info from item
         const presentItem: ISingleStore = {
-          temp: main.temp,
+          temp: main.temp - 273,
           humidity: main.humidity,
           wind_speed: wind.speed,
           cloud: weather[0].description,
@@ -76,8 +104,23 @@ function App() {
     <div className="App">
       <p>Weather App from Payoneer</p>
       <TempSelector value={tempUnit} handleChange={handleUnitChange} />
-      <PaginationArrows />
-      <WeatherBox />
+      <PaginationArrows
+        handleLeft={handleBackwardArrow}
+        handleRight={handleForwardArrow}
+        pageIndex={pageIndex}
+        maxPage={Math.floor(responseData.length / pageSize)}
+      />
+      <DisplayDiv>
+        {displayData.map(singleData => (
+          <WeatherBox
+            key={singleData.current_date}
+            temp={singleData.temp}
+            humidity={singleData.humidity}
+            current_date={singleData.current_date}
+            tempUnit={tempUnit}
+          />
+        ))}
+      </DisplayDiv>
     </div>
   );
 }
