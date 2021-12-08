@@ -24,7 +24,7 @@ function PaginationArrows({ handleLeft, handleRight, pageIndex, maxPage }: IPagi
       margin: 0,
     }}>
       {<ArrowCircleLeftIcon sx={{ fontSize: 36.5, opacity: pageIndex === 1 ? '0.1' : '1' }} onClick={handleLeft} />}
-      <Button variant="outlined">Refresh</Button>
+      <Button sx={{textTransform: 'capitalize', backgroundColor: '#ffffff', border: '1px solid #000000', color: '#000000' }}>Refresh</Button>
       {<ArrowCircleRightIcon sx={{ fontSize: 36.5, opacity: pageIndex === maxPage ? '0.1' : '1' }} onClick={handleRight} />}
     </Container>
   )

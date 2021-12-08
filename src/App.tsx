@@ -12,6 +12,7 @@ const DisplayDiv = styled.div`
   justify-content: center;
   gap: '8px';
   align-items: center;
+  margin: 2rem auto;
 `;
 
 interface ISingleStore {
@@ -41,7 +42,7 @@ function App() {
   }, [pageIndex, pageSize, responseData]);
 
   useEffect(() => {
-    if (screenWidth > 768) setPageSize(3)
+    if (screenWidth > 368) setPageSize(3)
     else setPageSize(1)
   }, [screenWidth])
 
