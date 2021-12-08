@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import TempSelector from './components/TempSelector';
 import PaginationArrows from './components/PaginationArrows';
 import WeatherBox from './components/WeatherBox';
-import { months } from './utils/basicFormatter';
+import { months, useWindowSize } from './utils/basicFormatter';
 import data from './mockData.json';
 
 const DisplayDiv = styled.div`
@@ -33,11 +33,17 @@ function App() {
   const [displayData, setDisplayData] = useState<ISingleStore[]>([]);
   const [pageSize, setPageSize] = useState<number>(3);
   const [pageIndex, setPageIndex] = useState<number>(1);
+  const screenWidth = useWindowSize();
 
   useEffect(() => {
     const sectionData = responseData.slice(pageSize * (pageIndex - 1), pageSize * pageIndex);
     setDisplayData(sectionData);
   }, [pageIndex, pageSize, responseData]);
+
+  useEffect(() => {
+    if (screenWidth > 768) setPageSize(3)
+    else setPageSize(1)
+  }, [screenWidth])
 
   const handleForwardArrow = () => {
     if (pageIndex < Math.floor(responseData.length / pageSize)) {
@@ -99,7 +105,7 @@ function App() {
     e.preventDefault();
     setTempUnit(e.target.value);
   }
-  console.log(responseData);
+  console.log(screenWidth);
   return (
     <div className="App">
       <p>Weather App from Payoneer</p>
