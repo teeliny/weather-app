@@ -7,6 +7,8 @@ import { months, useWindowSize } from '../utils/basicFormatter';
 // import data from '../mockData.json';
 import ChartComponent from '../components/ChartComponent';
 import { useFetchWeatherQuery } from '../features/weather-api-slice';
+import LoadingComponent from '../components/LoadingComponent';
+
 
 const DisplayDiv = styled.div`
   width: 100%;
@@ -171,35 +173,42 @@ function WeatherScreen() {
   // End of functions to handle clicks
 
   return (
-    <MainWrapper>
-      <p>Weather App from Payoneer</p>
-      <TempSelector value={tempUnit} handleChange={handleUnitChange} />
-      <PaginationArrows
-        handleLeft={handleBackwardArrow}
-        handleRight={handleForwardArrow}
-        handleRefetch={handleRefetch}
-        pageIndex={pageIndex}
-        maxPage={Math.floor(responseData.length / pageSize)}
-      />
-      <DisplayDiv>
-        {displayData.map((singleData) => (
-          <WeatherBox
-            key={singleData.current_date}
-            id={singleData.current_date}
-            temp={singleData.temp}
-            humidity={singleData.humidity}
-            current_date={singleData.current_date}
-            tempUnit={tempUnit}
-            handleSelectDay={handleSelectDay}
+    <React.Fragment>
+      {
+        isFetching ? (
+        <LoadingComponent />
+      ) : (
+        <MainWrapper>
+          <p>Weather App from Payoneer</p>
+          <TempSelector value={tempUnit} handleChange={handleUnitChange} />
+          <PaginationArrows
+            handleLeft={handleBackwardArrow}
+            handleRight={handleForwardArrow}
+            handleRefetch={handleRefetch}
+            pageIndex={pageIndex}
+            maxPage={Math.floor(responseData.length / pageSize)}
           />
-        ))}
-      </DisplayDiv>
-      <ChartWrapper>
-        {barData.length > 0 && (
-          <ChartComponent input={barData} tempUnit={tempUnit} />
-        )}
-      </ChartWrapper>
-    </MainWrapper>
+          <DisplayDiv>
+            {displayData.map((singleData) => (
+              <WeatherBox
+                key={singleData.current_date}
+                id={singleData.current_date}
+                temp={singleData.temp}
+                humidity={singleData.humidity}
+                current_date={singleData.current_date}
+                tempUnit={tempUnit}
+                handleSelectDay={handleSelectDay}
+              />
+            ))}
+          </DisplayDiv>
+          <ChartWrapper>
+            {barData.length > 0 && (
+              <ChartComponent input={barData} tempUnit={tempUnit} />
+            )}
+          </ChartWrapper>
+        </MainWrapper>
+      )}
+    </React.Fragment>
   );
 }
 
