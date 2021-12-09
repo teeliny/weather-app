@@ -5,6 +5,7 @@ import PaginationArrows from './components/PaginationArrows';
 import WeatherBox from './components/WeatherBox';
 import { months, useWindowSize } from './utils/basicFormatter';
 import data from './mockData.json';
+import ChartComponent from './components/ChartComponent';
 
 const DisplayDiv = styled.div`
   width: 100%;
@@ -30,22 +31,35 @@ interface IStoreData {
 
 function App() {
   const [tempUnit, setTempUnit] = useState<string>('0');
+  const [dataByDate, setDataByDate] = useState<IStoreData | null>(null);
   const [responseData, setResponseData] = useState<ISingleStore[]>([]);
   const [displayData, setDisplayData] = useState<ISingleStore[]>([]);
+  const [barData, setBarData] = useState<ISingleStore[]>([]);
   const [pageSize, setPageSize] = useState<number>(3);
   const [pageIndex, setPageIndex] = useState<number>(1);
+  const [selectedDay, setSelectedDay] = useState<string>('11 Dec. 2021');
   const screenWidth = useWindowSize();
 
   useEffect(() => {
+    if (selectedDay.length > 0 && dataByDate) {
+      setBarData(dataByDate[selectedDay]);
+    }
+  }, [selectedDay, dataByDate]);
+
+  // Extract the data to display based on page index
+  useEffect(() => {
     const sectionData = responseData.slice(pageSize * (pageIndex - 1), pageSize * pageIndex);
     setDisplayData(sectionData);
+    if (sectionData[0]?.current_date) setSelectedDay(sectionData[0].current_date);
   }, [pageIndex, pageSize, responseData]);
 
+  // Check screen size and use it to set page size
   useEffect(() => {
     if (screenWidth > 368) setPageSize(3)
     else setPageSize(1)
   }, [screenWidth])
 
+  // Functions to handle clicks starts
   const handleForwardArrow = () => {
     if (pageIndex < Math.floor(responseData.length / pageSize)) {
       setPageIndex(pageIndex + 1);
@@ -56,6 +70,15 @@ function App() {
       setPageIndex(pageIndex - 1);
     }
   }
+  const handleUnitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setTempUnit(e.target.value);
+  }
+  const handleSelectDay = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.preventDefault();
+    setSelectedDay(e.currentTarget.id);
+  }
+  // End of functions to handle clicks
 
   useEffect(() => {
     if (data.list.length > 0) {
@@ -99,14 +122,11 @@ function App() {
         }
       });
       setResponseData(dailyReports);
+      setDataByDate(requiredFields);
     }
   }, []);
 
-  const handleUnitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setTempUnit(e.target.value);
-  }
-  console.log(screenWidth);
+  console.log(barData);
   return (
     <div className="App">
       <p>Weather App from Payoneer</p>
@@ -121,13 +141,16 @@ function App() {
         {displayData.map(singleData => (
           <WeatherBox
             key={singleData.current_date}
+            id={singleData.current_date}
             temp={singleData.temp}
             humidity={singleData.humidity}
             current_date={singleData.current_date}
             tempUnit={tempUnit}
+            handleSelectDay={handleSelectDay}
           />
         ))}
       </DisplayDiv>
+      {barData.length > 0 && <ChartComponent input={barData} tempUnit={tempUnit} />}
     </div>
   );
 }

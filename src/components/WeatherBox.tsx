@@ -15,11 +15,14 @@ interface IWeatherBox {
   humidity: number;
   current_date: string;
   tempUnit: string;
+  id: string;
+  handleSelectDay: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
 }
 
-function WeatherBox({temp, humidity, current_date, tempUnit}: IWeatherBox) {
+function WeatherBox({temp, humidity, current_date, tempUnit, id, handleSelectDay}: IWeatherBox) {
   return (
     <Box
+      id={id}
       sx={{
         width: 200,
         height: 200,
@@ -31,6 +34,7 @@ function WeatherBox({temp, humidity, current_date, tempUnit}: IWeatherBox) {
         alignItems: 'center',
         border: '1px solid #000000',
       }}
+      onClick={handleSelectDay}
     >
       <p>Temperature</p>
       <InnerDiv>

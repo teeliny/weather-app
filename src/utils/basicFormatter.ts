@@ -32,6 +32,17 @@ export const months = [
   'Dec',
 ];
 
+export const timeFormats: {[key: string]: string} = {
+  '0': '00:00 AM',
+  '3': '03:00 AM',
+  '6': '06:00 AM',
+  '9': '09:00 AM',
+  '12': '12:00 PM',
+  '15': '03:00 PM',
+  '18': '06:00 PM',
+  '21': '09:00 PM',
+}
+
 export function convertTemp(tempUnit: string, temp: number) {
   if (tempUnit === '1') {
     return ((9 * temp / 5) + 32);
