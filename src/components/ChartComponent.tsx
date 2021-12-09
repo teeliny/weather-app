@@ -61,7 +61,7 @@ function ChartComponent({ input, tempUnit }: IChartInput) {
   }; 
   return (
     <React.Fragment>
-      <Bar options={options} data={data} />
+      <Bar options={options} data={data} height={280} />
     </React.Fragment>
   )
 }

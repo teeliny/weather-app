@@ -24,8 +24,8 @@ function WeatherBox({temp, humidity, current_date, tempUnit, id, handleSelectDay
     <Box
       id={id}
       sx={{
-        width: 200,
-        height: 200,
+        width: 120,
+        height: 120,
         margin: '0 auto',
         padding: '1rem 2rem',
         display: 'flex',
@@ -47,4 +47,3 @@ function WeatherBox({temp, humidity, current_date, tempUnit, id, handleSelectDay
 }
 
 export default WeatherBox;
-
