@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches weather box snapshot 1`] = `
+<div
+  className="MuiBox-root css-l3v7cb"
+  data-testid="single-box"
+  id=""
+  onClick={[Function]}
+>
+  <p>
+    Temperature
+  </p>
+  <div
+    className="css-hdtzot"
+  >
+    <p>
+      30.00
+       
+      C
+    </p>
+    <p>
+      60
+    </p>
+  </div>
+  <p>
+    
+  </p>
+</div>
+`;
