@@ -1,58 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import styled from '@emotion/styled';
 import TempSelector from '../components/TempSelector';
 import PaginationArrows from '../components/PaginationArrows';
 import WeatherBox from '../components/WeatherBox';
 import { months } from '../utils/basicFormatter';
-// import data from '../mockData.json';
 import ChartComponent from '../components/ChartComponent';
 import { useFetchWeatherQuery } from '../features/weather-api-slice';
-import LoadingComponent from './LoadingComponent';
+import LoadingComponent from './LoadingScreen';
 import { useAppSelector } from '../app/hooks';
 import { IChartComp, IRequiredFields } from '../typings/weather.typing';
-
-
-const DisplayDiv = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: '8px';
-  align-items: center;
-  margin: 3rem auto;
-
-  @media (min-width: 769px) {
-    width: 80%;
-  }
-  @media (min-width: 971px) {
-    width: 70%;
-  }
-`;
-
-const ChartWrapper = styled.div`
-  height: 300px;
-  width: 90%;
-  margin: 0 auto;
-
-  @media (min-width: 769px) {
-    width: 60%;
-  }
-  @media (min-width: 971px) {
-    width: 40%;
-  }
-`;
-
-const MainWrapper = styled.div`
-  position: relative;
-  margin: 0 1rem;
-
-  @media(min-width: 769px) {
-    margin: 0 3rem;
-  }
-
-  @media(min-width: 1025px) {
-    margin: 0 10rem;
-  }
-`;
+import {
+  CardsWrapper,
+  ChartWrapper,
+  MainWrapper,
+} from '../styles/weather.style';
 
 function WeatherScreen() {
   const days = process.env.REACT_APP_DAYS_COUNT as string;
@@ -211,7 +171,7 @@ function WeatherScreen() {
             pageIndex={pageIndex}
             maxPage={Math.floor(responseData.length / pageSize)}
           />
-          <DisplayDiv>
+          <CardsWrapper>
             {displayData.map((singleData) => (
               <WeatherBox
                 key={singleData.current_date}
@@ -223,7 +183,7 @@ function WeatherScreen() {
                 handleSelectDay={handleSelectDay}
               />
             ))}
-          </DisplayDiv>
+          </CardsWrapper>
           <ChartWrapper>
             {barData.length > 0 && (
               <ChartComponent input={barData} tempUnit={tempUnit} />

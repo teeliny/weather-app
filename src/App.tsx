@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useEffect } from 'react';
-import LoadingComponent from './pages/LoadingComponent';
+import LoadingComponent from './pages/LoadingScreen';
 import { useAppDispatch } from './app/hooks';
 import { toggleView } from './features/screen-width-slice';
 import { useWindowSize } from './utils/basicFormatter';
