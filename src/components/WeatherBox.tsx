@@ -1,23 +1,8 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import styled from '@emotion/styled';
 import { convertTemp } from '../utils/basicFormatter';
-
-const InnerDiv = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-interface IWeatherBox {
-  temp: number;
-  humidity: number;
-  current_date: string;
-  tempUnit: string;
-  id: string;
-  handleSelectDay: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
-}
+import { CardWrapper } from '../styles/weather.style';
+import { IWeatherBox } from '../typings/weather.typing';
 
 function WeatherBox({temp, humidity, current_date, tempUnit, id, handleSelectDay}: IWeatherBox) {
   return (
@@ -37,10 +22,10 @@ function WeatherBox({temp, humidity, current_date, tempUnit, id, handleSelectDay
       onClick={handleSelectDay}
     >
       <p>Temperature</p>
-      <InnerDiv>
+      <CardWrapper>
         <p>{(convertTemp(tempUnit, temp)).toFixed(2)} {tempUnit === '0' ? 'C' : 'F'}</p>
         <p>{humidity.toFixed(0)}</p>
-      </InnerDiv>
+      </CardWrapper>
       <p>{current_date}</p>
     </Box>
   )

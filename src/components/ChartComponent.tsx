@@ -9,19 +9,8 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { convertTemp, timeFormats } from '../utils/basicFormatter';
+import { IChartInput } from '../typings/weather.typing';
 
-interface IChartComp {
-  temp: number;
-  humidity: number;
-  wind_speed: number;
-  cloud: string;
-  current_date: string;
-  hour: number;
-}
-interface IChartInput {
-  input: IChartComp[];
-  tempUnit: string;
-}
 
 BarChart.register(
   CategoryScale,
@@ -42,6 +31,7 @@ function ChartComponent({ input, tempUnit }: IChartInput) {
     barLabel.push(timeFormats[hourString]);
   }
   const options = {
+    maintainAspectRatio: false,
     responsive: true,
     plugins: {
       title: {

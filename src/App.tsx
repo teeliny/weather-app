@@ -1,19 +1,30 @@
-import React, { lazy, Suspense } from 'react';
-import LoadingComponent from './components/LoadingComponent';
-// import styled from '@emotion/styled';
-// const MainWrapper = styled.div`
-//   margin: 0 1rem;
-// `;
+import React, { lazy, Suspense, useEffect } from 'react';
+import LoadingComponent from './pages/LoadingComponent';
+import { useAppDispatch } from './app/hooks';
+import { toggleView } from './features/screen-width-slice';
+import { useWindowSize } from './utils/basicFormatter';
+
 const WeatherScreen = lazy(() => import('./pages/WeatherScreen'));
 
 function App() {
+  const dispatch = useAppDispatch();
+  const screenWidth = useWindowSize();
+
+  // Check screen size and use it to set page size
+  useEffect(() => {
+    if (screenWidth > 768) {
+      dispatch(toggleView(false));
+    } else {
+      dispatch(toggleView(true));
+    }
+  }, [dispatch, screenWidth]);
   return (
-    <div style={{ width: '100%', height: '100%' }}>
+    <React.Fragment>
       <Suspense fallback={<LoadingComponent />}>
         <p>Weather App from Payoneer</p>
         <WeatherScreen />
       </Suspense>
-    </div>
+    </React.Fragment>
   );
 }
 

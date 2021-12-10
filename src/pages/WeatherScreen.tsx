@@ -3,11 +3,13 @@ import styled from '@emotion/styled';
 import TempSelector from '../components/TempSelector';
 import PaginationArrows from '../components/PaginationArrows';
 import WeatherBox from '../components/WeatherBox';
-import { months, useWindowSize } from '../utils/basicFormatter';
+import { months } from '../utils/basicFormatter';
 // import data from '../mockData.json';
 import ChartComponent from '../components/ChartComponent';
 import { useFetchWeatherQuery } from '../features/weather-api-slice';
-import LoadingComponent from '../components/LoadingComponent';
+import LoadingComponent from './LoadingComponent';
+import { useAppSelector } from '../app/hooks';
+import { IChartComp, IRequiredFields } from '../typings/weather.typing';
 
 
 const DisplayDiv = styled.div`
@@ -16,47 +18,60 @@ const DisplayDiv = styled.div`
   justify-content: center;
   gap: '8px';
   align-items: center;
-  margin: 2rem auto;
+  margin: 3rem auto;
+
+  @media (min-width: 769px) {
+    width: 80%;
+  }
+  @media (min-width: 971px) {
+    width: 70%;
+  }
 `;
 
 const ChartWrapper = styled.div`
   height: 300px;
-  margin: 0 2rem;
+  width: 90%;
+  margin: 0 auto;
+
+  @media (min-width: 769px) {
+    width: 60%;
+  }
+  @media (min-width: 971px) {
+    width: 40%;
+  }
 `;
 
 const MainWrapper = styled.div`
+  position: relative;
   margin: 0 1rem;
+
+  @media(min-width: 769px) {
+    margin: 0 3rem;
+  }
+
+  @media(min-width: 1025px) {
+    margin: 0 10rem;
+  }
 `;
-
-interface ISingleStore {
-  temp: number;
-  humidity: number;
-  wind_speed: number;
-  cloud: string;
-  current_date: string;
-  hour: number;
-}
-
-interface IStoreData {
-  [key: string]: ISingleStore[];
-}
 
 function WeatherScreen() {
   const days = process.env.REACT_APP_DAYS_COUNT as string;
   const appID = process.env.REACT_APP_WEATHER_KEY as string;
   const cnt = +days * 8;
   const nigString = `lat=6.537216&lon=3.3718272&APPID=${appID}&cnt=${cnt}`;
+
+  const myView = useAppSelector((state) => state.screen.mobile_view);
   
   const [tempUnit, setTempUnit] = useState<string>('0');
-  const [dataByDate, setDataByDate] = useState<IStoreData | null>(null);
-  const [responseData, setResponseData] = useState<ISingleStore[]>([]);
-  const [displayData, setDisplayData] = useState<ISingleStore[]>([]);
-  const [barData, setBarData] = useState<ISingleStore[]>([]);
+  const [dataByDate, setDataByDate] = useState<IRequiredFields | null>(null);
+  const [responseData, setResponseData] = useState<IChartComp[]>([]);
+  const [displayData, setDisplayData] = useState<IChartComp[]>([]);
+  const [barData, setBarData] = useState<IChartComp[]>([]);
   const [pageSize, setPageSize] = useState<number>(3);
   const [pageIndex, setPageIndex] = useState<number>(1);
   const [selectedDay, setSelectedDay] = useState<string>('');
   const [queryString, setQueryString] = useState(nigString);
-  const screenWidth = useWindowSize();
+  // const screenWidth = useWindowSize();
 
   // Access current position of user and store query string 
   if (navigator.geolocation) {
@@ -73,7 +88,7 @@ function WeatherScreen() {
   // Access relevant info from weather info and store
   useEffect(() => {
     if (!isFetching && !isError) {
-      const requiredFields: IStoreData = {};
+      const requiredFields: IRequiredFields = {};
       const availableDates: string[] = [];
       
       data.list.forEach(
@@ -85,7 +100,7 @@ function WeatherScreen() {
             months[full_date.getMonth()]
           }. ${full_date.getFullYear()}`;
           // Create a new info from item
-          const presentItem: ISingleStore = {
+          const presentItem: IChartComp = {
             temp: main.temp - 273,
             humidity: main.humidity,
             wind_speed: wind.speed,
@@ -129,9 +144,13 @@ function WeatherScreen() {
 
   // Check screen size and use it to set page size
   useEffect(() => {
-    if (screenWidth > 768) setPageSize(3)
-    else setPageSize(1)
-  }, [screenWidth]);
+    if (!myView) {
+      setPageSize(3);
+    }
+    else {
+      setPageSize(1);
+    }
+  }, [myView]);
 
   // Watch out for changes in the day selected from box and set bar data
   useEffect(() => {
@@ -180,7 +199,11 @@ function WeatherScreen() {
       ) : (
         <MainWrapper>
           <p>Weather App from Payoneer</p>
-          <TempSelector value={tempUnit} handleChange={handleUnitChange} />
+          <TempSelector 
+            value={tempUnit} 
+            handleChange={handleUnitChange}
+            handleRefetch={handleRefetch} 
+          />
           <PaginationArrows
             handleLeft={handleBackwardArrow}
             handleRight={handleForwardArrow}
@@ -213,4 +236,3 @@ function WeatherScreen() {
 }
 
 export default WeatherScreen;
-

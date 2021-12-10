@@ -1,21 +1,9 @@
-import { useState, useLayoutEffect } from 'react'
-interface ISingleStore {
-  temp: number;
-  humidity: number;
-  wind_speed: number;
-  cloud: string;
-  hour: number;
-}
-
-interface IStoreData {
-  [key: string]: ISingleStore[];
-}
-interface IInput {
-  main: { temp: number; humidity: number };
-  weather: { description: string }[];
-  wind: { speed: number },
-  dt_txt: string;
-}
+import { useState, useLayoutEffect } from 'react';
+import {
+  IChartComp,
+  IRequiredFields,
+  IIntervalFormatter,
+} from '../typings/weather.typing';
 
 export const months = [
   'Jan',
@@ -32,6 +20,7 @@ export const months = [
   'Dec',
 ];
 
+// Time format for chart 
 export const timeFormats: {[key: string]: string} = {
   '0': '00:00 AM',
   '3': '03:00 AM',
@@ -43,6 +32,7 @@ export const timeFormats: {[key: string]: string} = {
   '21': '09:00 PM',
 }
 
+// Function to covert temp to Fahrenheit
 export function convertTemp(tempUnit: string, temp: number) {
   if (tempUnit === '1') {
     return ((9 * temp / 5) + 32);
@@ -50,32 +40,36 @@ export function convertTemp(tempUnit: string, temp: number) {
   else return temp;
 }
 
-export function intervalFormatter(input: IInput[]) {
-  const requiredFields: IStoreData = {};
+// Function to format and extract necessary fields from response data
+export function intervalFormatter(input: IIntervalFormatter[]) {
+  const requiredFields: IRequiredFields = {};
   input.forEach((item) => {
     const { main, weather, wind, dt_txt } = item;
     // Create date in th format, dd month year
     const full_date = new Date(dt_txt);
-    const current_date = `${full_date.getDate()} ${months[full_date.getMonth()]}. ${full_date.getFullYear()}`;
+    const current_date = `${full_date.getDate()} ${
+      months[full_date.getMonth()]
+    }. ${full_date.getFullYear()}`;
     // Create a new info from item
-    const presentItem: ISingleStore = {
+    const presentItem: IChartComp = {
       temp: main.temp,
       humidity: main.humidity,
       wind_speed: wind.speed,
       cloud: weather[0].description,
       hour: full_date.getHours(),
-    }
+      current_date,
+    };
     // Check if this current date is already store in required object
     if (requiredFields.hasOwnProperty(current_date)) {
       requiredFields[current_date].push(presentItem);
-    }
-    else {
+    } else {
       requiredFields[current_date] = [presentItem];
     }
-  })
+  });
   return requiredFields;
 }
 
+// Function to monitor window width
 export function useWindowSize() {
   const [width, setWidth] = useState(0);
 
