@@ -7,6 +7,7 @@ import { IWeatherBox } from './weather.typing';
 function WeatherBox({temp, humidity, current_date, tempUnit, id, handleSelectDay}: IWeatherBox) {
   return (
     <Box
+      data-testid={'single-box'}
       id={id}
       sx={{
         width: 120,
