@@ -3,8 +3,8 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
-import { useAppSelector } from '../app/hooks';
-import { IPaginationArrow } from '../typings/weather.typing';
+import { useAppSelector } from '../../app/hooks';
+import { IPaginationArrow } from './pagination.typing';
 
 function PaginationArrows({ handleLeft, handleRight, handleRefetch, pageIndex, maxPage }: IPaginationArrow) {
   const myView = useAppSelector((state) => state.screen.mobile_view);

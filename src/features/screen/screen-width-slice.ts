@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { SizeState } from '../typings/weather.typing';
+import { SizeState } from './screen.typing';
 
 const initialState: SizeState = {
   mobile_view: false,

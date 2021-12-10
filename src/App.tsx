@@ -1,10 +1,10 @@
 import React, { lazy, Suspense, useEffect } from 'react';
-import LoadingComponent from './pages/LoadingScreen';
+import LoadingComponent from './pages/loadingPage/LoadingScreen';
 import { useAppDispatch } from './app/hooks';
-import { toggleView } from './features/screen-width-slice';
-import { useWindowSize } from './utils/basicFormatter';
+import { toggleView } from './features/screen/screen-width-slice';
+import { useWindowSize } from './utils/formatter/basicFormatter';
 
-const WeatherScreen = lazy(() => import('./pages/WeatherScreen'));
+const WeatherScreen = lazy(() => import('./pages/weatherPage/WeatherScreen'));
 
 function App() {
   const dispatch = useAppDispatch();

@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import {  apiSlice } from '../features/weather-api-slice';
-import screenReducer from '../features/screen-width-slice';
+import {  apiSlice } from '../features/weather/weather-api-slice';
+import screenReducer from '../features/screen/screen-width-slice';
 
 export const store = configureStore({
   reducer: {

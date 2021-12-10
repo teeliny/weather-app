@@ -4,9 +4,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import Button from '@mui/material/Button';
 import React from 'react';
-import { useAppSelector } from '../app/hooks';
-import { TempWrapper } from '../styles/weather.style'
-import { ITempSelector } from '../typings/weather.typing';
+import { useAppSelector } from '../../app/hooks';
+import { TempWrapper } from './temp.style';
+import { ITempSelector } from './temp.typing';
 
 
 function TempSelector({ value, handleChange, handleRefetch }: ITempSelector) {

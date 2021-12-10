@@ -3,7 +3,7 @@ import {
   IChartComp,
   IRequiredFields,
   IIntervalFormatter,
-} from '../typings/weather.typing';
+} from './formatter.typing';
 
 export const months = [
   'Jan',

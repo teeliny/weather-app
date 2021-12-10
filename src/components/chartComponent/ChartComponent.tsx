@@ -8,8 +8,8 @@ import {
   Tooltip,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { convertTemp, timeFormats } from '../utils/basicFormatter';
-import { IChartInput } from '../typings/weather.typing';
+import { convertTemp, timeFormats } from '../../utils/formatter/basicFormatter';
+import { IChartInput } from './chart.typing';
 
 
 BarChart.register(

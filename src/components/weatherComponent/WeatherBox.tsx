@@ -1,8 +1,8 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import { convertTemp } from '../utils/basicFormatter';
-import { CardWrapper } from '../styles/weather.style';
-import { IWeatherBox } from '../typings/weather.typing';
+import { convertTemp } from '../../utils/formatter/basicFormatter';
+import { CardWrapper } from './weather.style';
+import { IWeatherBox } from './weather.typing';
 
 function WeatherBox({temp, humidity, current_date, tempUnit, id, handleSelectDay}: IWeatherBox) {
   return (

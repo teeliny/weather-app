@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import TempSelector from '../components/TempSelector';
-import PaginationArrows from '../components/PaginationArrows';
-import WeatherBox from '../components/WeatherBox';
-import { months } from '../utils/basicFormatter';
-import ChartComponent from '../components/ChartComponent';
-import { useFetchWeatherQuery } from '../features/weather-api-slice';
-import LoadingComponent from './LoadingScreen';
-import { useAppSelector } from '../app/hooks';
-import { IChartComp, IRequiredFields } from '../typings/weather.typing';
+import TempSelector from '../../components/tempComponent/TempSelector';
+import PaginationArrows from '../../components/paginationComponent/PaginationArrows';
+import WeatherBox from '../../components/weatherComponent/WeatherBox';
+import { months } from '../../utils/formatter/basicFormatter';
+import ChartComponent from '../../components/chartComponent/ChartComponent';
+import { useFetchWeatherQuery } from '../../features/weather/weather-api-slice';
+import LoadingComponent from '../loadingPage/LoadingScreen';
+import { useAppSelector } from '../../app/hooks';
+import { IChartComp, IRequiredFields } from './weatherPage.typing';
 import {
   CardsWrapper,
   ChartWrapper,
   MainWrapper,
-} from '../styles/weather.style';
+} from './weatherPage.style';
 
 function WeatherScreen() {
   const days = process.env.REACT_APP_DAYS_COUNT as string;
