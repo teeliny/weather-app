@@ -13,7 +13,7 @@ function TempSelector({ value, handleChange, handleRefetch }: ITempSelector) {
   const myView = useAppSelector((state) => state.screen.mobile_view);
 
   return (
-    <TempWrapper>
+    <TempWrapper data-testid={'temp-control'}>
       <FormControl component="fieldset" sx={{ width: '100%' }}>
         <RadioGroup
           sx={{
