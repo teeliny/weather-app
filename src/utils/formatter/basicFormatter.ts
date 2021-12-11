@@ -22,7 +22,7 @@ export const months = [
 
 // Time format for chart 
 export const timeFormats: {[key: string]: string} = {
-  '0': '00:00 AM',
+  '0': '12:00 AM',
   '3': '03:00 AM',
   '6': '06:00 AM',
   '9': '09:00 AM',
