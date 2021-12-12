@@ -1,46 +1,82 @@
-# Getting Started with Create React App
+# Payoneer Frontend Assessment Solution
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a solution to the challenge
 
-## Available Scripts
+## Table of contents
 
-In the project directory, you can run:
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Useful resources](#useful-resources)
+- [Author](#author)
 
-### `yarn start`
+## Overview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This app is a front end app that was built with React Library, React Tool Kit(RTK) and Material UI.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### The challenge
 
-### `yarn test`
+User should be able to:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Obtain the weather condition of his/her present location
+- The forecast should cover at least 5 days
+- To see the average temperature and humidity of each day
+- To select any of the display days to see the temperature breakdown of the selected day at an interval of 3hours
+- View the optimal layout for each page depending on their device's screen size, showing three days on desktop view and one day on tablet and mobile view
+- Click on the pagination arrow to see the next day or next set of 3 days
 
-### `yarn build`
+### Screenshot
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![](./weather.JPG)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Links
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Live Site URL: [Add live site URL here](https://teeliny-weather-app.netlify.app/)
 
-### `yarn eject`
+### Built with
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Semantic HTML5 markup
+- CSS custom properties
+- Flexbox
+- Mobile-first workflow
+- [React](https://reactjs.org/) - JS library
+- [Material UI](https://mui.com/) - For styles
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### What I learned
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- How to use material UI components like Box, Container, Button etc
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- How to use RTK along with react-redux for state management.
 
-## Learn More
+- Changing number of element in a flex box based on screen size produced from a created hook
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```js
+function useWindowSize() {
+  const [width, setWidth] = useState(0);
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  useLayoutEffect(() => {
+    function updateWidth() {
+      setWidth(window.innerWidth);
+    }
+    window.addEventListener('resize', updateWidth);
+    updateWidth();
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
+  return width;
+}
+
+```
+
+### Useful resources
+
+- [Re render components based on window screen size](https://www.pluralsight.com/guides/re-render-react-component-on-window-resize) - This helped me to render a component on window resize.
+- [Testing react components](https://testing-library.com/docs/react-testing-library/intro) - This is an amazing article which helped me to perfect unit testing of react components.
+- [React testing with snapshot](https://reactjs.org/docs/test-renderer.html) - This article exposed me to how to grab a snapshot of the platform view.
+- [Using react tool kit to create a hook for fetching and caching data](https://redux-toolkit.js.org/rtk-query/overview) - This exposed me to how to use axios under the hood to create a hook for fetching data.
+
+## Author
+
+- GitHub Link - [Add your name here](https://github.com/teeliny)
