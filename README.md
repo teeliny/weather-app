@@ -34,16 +34,16 @@ User should be able to:
 
 ### Links
 
-- Live Site URL: [Add live site URL here](https://teeliny-weather-app.netlify.app/)
+- Live Site URL: [https://teeliny-weather-app.netlify.app/](https://teeliny-weather-app.netlify.app/)
 
 ### Built with
 
+- [React](https://reactjs.org/) - JS library
+- [Material UI](https://mui.com/) - For styles
 - Semantic HTML5 markup
 - CSS custom properties
 - Flexbox
 - Mobile-first workflow
-- [React](https://reactjs.org/) - JS library
-- [Material UI](https://mui.com/) - For styles
 
 ### What I learned
 
@@ -79,4 +79,4 @@ function useWindowSize() {
 
 ## Author
 
-- GitHub Link - [Add your name here](https://github.com/teeliny)
+- GitHub Link to repo - [Click Here](https://github.com/teeliny/weather-app)
