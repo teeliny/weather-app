@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ErrorComponent from '../../components/ErrorComponent';
 import TempSelector from '../../components/tempComponent/TempSelector';
 import PaginationArrows from '../../components/paginationComponent/PaginationArrows';
 import WeatherBox from '../../components/weatherComponent/WeatherBox';
@@ -31,6 +32,7 @@ function WeatherScreen() {
   const [pageIndex, setPageIndex] = useState<number>(1);
   const [selectedDay, setSelectedDay] = useState<string>('');
   const [queryString, setQueryString] = useState(nigString);
+  const [errorMessage, setErrorMessage] = useState('');
   // const screenWidth = useWindowSize();
 
   // Access current position of user and store query string 
@@ -43,7 +45,7 @@ function WeatherScreen() {
   }
 
   // Calling the Query to fetch weather data
-  const { data, isFetching, isError, refetch } = useFetchWeatherQuery(queryString);
+  const { data, isFetching, isError, refetch, error } = useFetchWeatherQuery(queryString);
 
   // Access relevant info from weather info and store
   useEffect(() => {
@@ -102,6 +104,19 @@ function WeatherScreen() {
     }
   }, [data, isError, isFetching]);
 
+  // Handle error from the query call
+  useEffect(() => {
+    if (error) {
+      const parsedError = JSON.parse(JSON.stringify(error));
+      if (!parsedError.data) {
+        setErrorMessage('Oops! Network Error. Check your network and try again.');
+      }
+      else {
+        setErrorMessage('Invalid query string supplied. Check the API key and try again');
+      }
+    }
+  }, [error]);
+
   // Check screen size and use it to set page size
   useEffect(() => {
     if (!myView) {
@@ -150,12 +165,15 @@ function WeatherScreen() {
     refetch();
   }
   // End of functions to handle clicks
-
+  
+  // console.log(isFetching);
   return (
     <React.Fragment>
       {
         isFetching ? (
         <LoadingComponent />
+      ) : isError ? (
+      <ErrorComponent message={errorMessage} />
       ) : (
         <MainWrapper>
           <p>Weather App from Payoneer</p>
