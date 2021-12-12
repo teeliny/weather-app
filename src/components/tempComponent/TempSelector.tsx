@@ -42,8 +42,8 @@ function TempSelector({ value, handleChange, handleRefetch }: ITempSelector) {
               right: '0',
               textTransform: 'capitalize',
               backgroundColor: '#ffffff',
-              border: '1px solid #000000',
-              color: '#000000',
+              border: '1px solid #0055ff',
+              color: '#0055ff',
               width: '80px',
             }}
             onClick={handleRefetch}

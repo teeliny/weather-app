@@ -5,6 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(90deg, #effaff 0%, #d9e7ff 100%);
+  color: #0055ff;
 }
 
 html {
@@ -18,7 +20,20 @@ code {
     monospace;
 }
 
-p {
+h1, h2, h3, h4, h5, h6, p {
   margin: 0;
   padding: 0;
+}
+
+h1 {
+  font-size: 1.5rem;
+  line-height: 1.2;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  background: -webkit-linear-gradient(45deg, #09009f, #00ff95 80%);
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  margin: 1rem auto;
 }

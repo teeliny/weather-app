@@ -2,7 +2,7 @@
 
 exports[`matches weather box snapshot 1`] = `
 <div
-  className="MuiBox-root css-l3v7cb"
+  className="MuiBox-root css-h07y9t"
   data-testid="single-box"
   id=""
   onClick={[Function]}

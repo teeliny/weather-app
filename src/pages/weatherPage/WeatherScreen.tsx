@@ -23,6 +23,8 @@ function WeatherScreen() {
 
   const myView = useAppSelector((state) => state.screen.mobile_view);
   
+  const [queryString, setQueryString] = useState(nigString);
+  const [errorMessage, setErrorMessage] = useState('');
   const [tempUnit, setTempUnit] = useState<string>('0');
   const [dataByDate, setDataByDate] = useState<IRequiredFields | null>(null);
   const [responseData, setResponseData] = useState<IChartComp[]>([]);
@@ -31,8 +33,6 @@ function WeatherScreen() {
   const [pageSize, setPageSize] = useState<number>(3);
   const [pageIndex, setPageIndex] = useState<number>(1);
   const [selectedDay, setSelectedDay] = useState<string>('');
-  const [queryString, setQueryString] = useState(nigString);
-  const [errorMessage, setErrorMessage] = useState('');
   // const screenWidth = useWindowSize();
 
   // Access current position of user and store query string 
@@ -166,7 +166,7 @@ function WeatherScreen() {
   }
   // End of functions to handle clicks
   
-  // console.log(isFetching);
+  console.log(selectedDay);
   return (
     <React.Fragment>
       {
@@ -176,7 +176,7 @@ function WeatherScreen() {
       <ErrorComponent message={errorMessage} />
       ) : (
         <MainWrapper>
-          <p>Weather App from Payoneer</p>
+          <h1>Weather Forecast of your Location</h1>
           <TempSelector 
             value={tempUnit} 
             handleChange={handleUnitChange}
@@ -198,6 +198,7 @@ function WeatherScreen() {
                 humidity={singleData.humidity}
                 current_date={singleData.current_date}
                 tempUnit={tempUnit}
+                selectedDay={selectedDay}
                 handleSelectDay={handleSelectDay}
               />
             ))}

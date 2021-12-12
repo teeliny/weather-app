@@ -33,10 +33,31 @@ function ChartComponent({ input, tempUnit }: IChartInput) {
   const options = {
     maintainAspectRatio: false,
     responsive: true,
+    scales: {
+      x: {
+        grid: {
+          color: '#4eeb9c',
+          tickColor: '#0055ff',
+        },
+        ticks: {
+          color: '#0055ff',
+        },
+      },
+      y: {
+        grid: {
+          color: '#4eeb9c',
+          tickColor: '#0055ff',
+        },
+        ticks: {
+          color: '#0055ff',
+        },
+      },
+    },
     plugins: {
       title: {
         display: true,
         text: `Chart for ${currentDate} in ${tempUnit === '0' ? 'C' : 'F'}`,
+        color: '#0055ff',
       },
     },
   };

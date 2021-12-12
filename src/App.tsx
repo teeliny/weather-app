@@ -21,7 +21,6 @@ function App() {
   return (
     <React.Fragment>
       <Suspense fallback={<LoadingComponent />}>
-        <p>Weather App from Payoneer</p>
         <WeatherScreen />
       </Suspense>
     </React.Fragment>
