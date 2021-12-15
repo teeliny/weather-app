@@ -5,7 +5,15 @@ import Container from '@mui/material/Container';
 
 function LoadingComponent() {
   return (
-    <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+    <Container
+      data-testid="loading"
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+      }}
+    >
       <CircularProgress />
     </Container>
   );
