@@ -11,5 +11,4 @@ test('renders weather app', () => {
     </Provider>,
   );
   expect(getByTestId('loading')).toBeInTheDocument();
-  expect(getByTestId('loading')).toHaveAccessibleName();
 });
