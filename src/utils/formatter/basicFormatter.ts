@@ -53,7 +53,6 @@ const imgObjects: { [key: string]: string } = {
 };
 
 export function fetchImageURL(name: string, description: string) {
-  console.log(name);
   if (imgObjects[description.toLowerCase()]) {
     return imgObjects[description.toLowerCase()];
   }
