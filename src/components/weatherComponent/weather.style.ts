@@ -6,3 +6,8 @@ export const CardWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
+
+export const ImageWrapper = styled.div`
+  width: 40px;
+  height: 40px;
+`;

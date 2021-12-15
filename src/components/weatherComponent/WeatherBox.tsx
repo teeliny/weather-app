@@ -1,10 +1,19 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import { convertTemp } from '../../utils/formatter/basicFormatter';
-import { CardWrapper } from './weather.style';
+import { convertTemp, fetchImageURL } from '../../utils/formatter/basicFormatter';
+import { CardWrapper, ImageWrapper } from './weather.style';
 import { IWeatherBox } from './weather.typing';
 
-function WeatherBox({temp, humidity, current_date, tempUnit, id, selectedDay, handleSelectDay}: IWeatherBox) {
+function WeatherBox({
+  id, 
+  temp,
+  weather_name, 
+  weather_description, 
+  current_date,
+  tempUnit,
+  selectedDay,
+  handleSelectDay
+}: IWeatherBox) {
   return (
     <Box
       data-testid={'single-box'}
@@ -32,7 +41,13 @@ function WeatherBox({temp, humidity, current_date, tempUnit, id, selectedDay, ha
           {convertTemp(tempUnit, temp).toFixed(2)}{' '}
           {tempUnit === '0' ? 'C' : 'F'}
         </p>
-        <p>{humidity.toFixed(0)}</p>
+        <ImageWrapper>
+          <img
+            src={fetchImageURL(weather_name, weather_description)}
+            alt="weather-icon"
+            width="100%"
+          />
+        </ImageWrapper>
       </CardWrapper>
       <p>{current_date}</p>
     </Box>

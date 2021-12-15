@@ -66,7 +66,8 @@ function WeatherScreen() {
             temp: main.temp - 273,
             humidity: main.humidity,
             wind_speed: wind.speed,
-            cloud: weather[0].description,
+            weather_description: weather[0].description,
+            weather_name: weather[0].main,
             hour: full_date.getHours(),
             current_date,
           };
@@ -94,7 +95,8 @@ function WeatherScreen() {
           temp: sum_temp / allReports.length,
           humidity: sum_humidity / allReports.length,
           wind_speed: sum_wind_speed / allReports.length,
-          cloud: allReports[0].cloud,
+          weather_description: allReports[0].weather_description,
+          weather_name: allReports[0].weather_name,
           hour: allReports[0].hour,
           current_date: allReports[0].current_date,
         };
@@ -166,21 +168,19 @@ function WeatherScreen() {
   }
   // End of functions to handle clicks
   
-  console.log(selectedDay);
   return (
     <React.Fragment>
-      {
-        isFetching ? (
+      {isFetching ? (
         <LoadingComponent />
       ) : isError ? (
-      <ErrorComponent message={errorMessage} />
+        <ErrorComponent message={errorMessage} />
       ) : (
         <MainWrapper>
           <h1>Weather Forecast of your Location</h1>
-          <TempSelector 
-            value={tempUnit} 
+          <TempSelector
+            value={tempUnit}
             handleChange={handleUnitChange}
-            handleRefetch={handleRefetch} 
+            handleRefetch={handleRefetch}
           />
           <PaginationArrows
             handleLeft={handleBackwardArrow}
@@ -195,7 +195,8 @@ function WeatherScreen() {
                 key={singleData.current_date}
                 id={singleData.current_date}
                 temp={singleData.temp}
-                humidity={singleData.humidity}
+                weather_name={singleData.weather_name}
+                weather_description={singleData.weather_description}
                 current_date={singleData.current_date}
                 tempUnit={tempUnit}
                 selectedDay={selectedDay}
