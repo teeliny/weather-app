@@ -10,7 +10,9 @@ beforeEach(() => {
   eleWrapper = (
     <WeatherBox
       temp={30}
-      humidity={60}
+      weather_description={'overcast clouds'}
+      weather_name={'Clouds'}
+      selectedDay={'0'}
       current_date={''}
       tempUnit={''}
       id={''}

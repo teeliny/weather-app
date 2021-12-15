@@ -13,7 +13,8 @@ beforeEach(() => {
           temp: 30,
           humidity: 60,
           wind_speed: 2.54,
-          cloud: 'cloudy',
+          weather_description: 'overcast clouds',
+          weather_name: 'Clouds',
           hour: 3,
           current_date: '12 Dec. 2021'
         },
@@ -21,7 +22,8 @@ beforeEach(() => {
           temp: 30.5,
           humidity: 75,
           wind_speed: 2.08,
-          cloud: 'mist cloud',
+          weather_description: 'overcast clouds',
+          weather_name: 'Clouds',
           hour: 6,
           current_date: '12 Dec. 2021'
         }
