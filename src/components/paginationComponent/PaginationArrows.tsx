@@ -7,7 +7,7 @@ import { useAppSelector } from '../../app/hooks';
 import { IPaginationArrow } from './pagination.typing';
 
 function PaginationArrows({ handleLeft, handleRight, handleRefetch, pageIndex, maxPage }: IPaginationArrow) {
-  const myView = useAppSelector((state) => state.screen.mobile_view);
+  const myView = useAppSelector((state) => state.screen.size_view);
   return (
     <Container
       sx={{
@@ -28,7 +28,7 @@ function PaginationArrows({ handleLeft, handleRight, handleRefetch, pageIndex, m
           onClick={handleLeft}
         />
       }
-      {myView && (
+      {/* {myView && (
         <Button
           sx={{
             textTransform: 'capitalize',
@@ -41,7 +41,7 @@ function PaginationArrows({ handleLeft, handleRight, handleRefetch, pageIndex, m
         >
           Refresh
         </Button>
-      )}
+      )} */}
       {
         <ArrowCircleRightIcon
           sx={{ fontSize: 36.5, opacity: pageIndex === maxPage ? '0.1' : '1' }}

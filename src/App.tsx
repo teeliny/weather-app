@@ -12,10 +12,12 @@ function App() {
 
   // Check screen size and use it to set page size
   useEffect(() => {
-    if (screenWidth > 768) {
-      dispatch(toggleView(false));
+    if (screenWidth < 600) {
+      dispatch(toggleView(1));
+    } else if(screenWidth >= 600 && screenWidth < 900 ) {
+      dispatch(toggleView(2));
     } else {
-      dispatch(toggleView(true));
+      dispatch(toggleView(3));
     }
   }, [dispatch, screenWidth]);
   return (

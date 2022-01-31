@@ -1,3 +1,3 @@
 export interface SizeState {
-  mobile_view: boolean;
+  size_view: number;
 }

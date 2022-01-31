@@ -21,7 +21,7 @@ function WeatherScreen() {
   const cnt = +days * 8;
   const nigString = `lat=6.537216&lon=3.3718272&APPID=${appID}&cnt=${cnt}`;
 
-  const myView = useAppSelector((state) => state.screen.mobile_view);
+  const myView = useAppSelector((state) => state.screen.size_view);
   
   const [queryString, setQueryString] = useState(nigString);
   const [errorMessage, setErrorMessage] = useState('');
@@ -121,12 +121,7 @@ function WeatherScreen() {
 
   // Check screen size and use it to set page size
   useEffect(() => {
-    if (!myView) {
-      setPageSize(3);
-    }
-    else {
-      setPageSize(1);
-    }
+    setPageSize(myView);
   }, [myView]);
 
   // Watch out for changes in the day selected from box and set bar data

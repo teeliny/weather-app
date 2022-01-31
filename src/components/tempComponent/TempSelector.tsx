@@ -10,7 +10,7 @@ import { ITempSelector } from './temp.typing';
 
 
 function TempSelector({ value, handleChange, handleRefetch }: ITempSelector) {
-  const myView = useAppSelector((state) => state.screen.mobile_view);
+  const myView = useAppSelector((state) => state.screen.size_view);
 
   return (
     <TempWrapper data-testid={'temp-control'}>
@@ -35,7 +35,7 @@ function TempSelector({ value, handleChange, handleRefetch }: ITempSelector) {
             sx={{ margin: 0 }}
           />
         </RadioGroup>
-        {!myView && (
+        {/* {!myView && (
           <Button
             sx={{
               position: 'absolute',
@@ -50,7 +50,7 @@ function TempSelector({ value, handleChange, handleRefetch }: ITempSelector) {
           >
             Refresh
           </Button>
-        )}
+        )} */}
       </FormControl>
     </TempWrapper>
   );
