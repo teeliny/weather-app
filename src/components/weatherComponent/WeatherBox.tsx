@@ -32,6 +32,7 @@ function WeatherBox({
         cursor: 'pointer',
         backgroundColor: selectedDay === id ? '#d9e7ff' : '',
         color: '#000000',
+        zIndex: '2',
       }}
       onClick={handleSelectDay}
     >
