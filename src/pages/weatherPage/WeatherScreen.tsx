@@ -22,17 +22,23 @@ function WeatherScreen() {
   const nigString = `lat=6.537216&lon=3.3718272&APPID=${appID}&cnt=${cnt}`;
 
   const myView = useAppSelector((state) => state.screen.size_view);
+  const tempCheck = localStorage.getItem('tempUnit');
+  const initialUnit = tempCheck ? tempCheck : '0';
+  const tempDay = localStorage.getItem('currDay');
+  const initialDay = tempDay ? tempDay : '';
+  const tempPageIndex = localStorage.getItem('currPageIndex');
+  const initialPageIndex = tempPageIndex ? +tempPageIndex : 1;
   
   const [queryString, setQueryString] = useState(nigString);
   const [errorMessage, setErrorMessage] = useState('');
-  const [tempUnit, setTempUnit] = useState<string>('0');
+  const [tempUnit, setTempUnit] = useState<string>(initialUnit);
   const [dataByDate, setDataByDate] = useState<IRequiredFields | null>(null);
   const [responseData, setResponseData] = useState<IChartComp[]>([]);
   const [displayData, setDisplayData] = useState<IChartComp[]>([]);
   const [barData, setBarData] = useState<IChartComp[]>([]);
   const [pageSize, setPageSize] = useState<number>(3);
-  const [pageIndex, setPageIndex] = useState<number>(1);
-  const [selectedDay, setSelectedDay] = useState<string>('');
+  const [pageIndex, setPageIndex] = useState<number>(initialPageIndex);
+  const [selectedDay, setSelectedDay] = useState<string>(initialDay);
   // const screenWidth = useWindowSize();
 
   // Access current position of user and store query string 
@@ -126,21 +132,35 @@ function WeatherScreen() {
 
   // Watch out for changes in the day selected from box and set bar data
   useEffect(() => {
-    if (selectedDay.length > 0 && dataByDate) {
+    if (selectedDay?.length > 0 && dataByDate) {
       setBarData(dataByDate[selectedDay]);
     }
   }, [selectedDay, dataByDate]);
 
   // Extract the data to display based on page index
   useEffect(() => {
-    const sectionData = responseData.slice(pageSize * (pageIndex - 1), pageSize * pageIndex);
+    const sectionData = responseData.slice(
+      pageIndex - 1,
+      pageIndex + pageSize - 1,
+    );
     setDisplayData(sectionData);
-    if (sectionData[0]?.current_date) setSelectedDay(sectionData[0].current_date);
-  }, [pageIndex, pageSize, responseData]);
+    if (selectedDay.length === 0 && sectionData.length > 0) {
+      setSelectedDay(sectionData[0].current_date)
+    };
+
+    // Check if selected day is not present in sectionData
+    const checkData = sectionData.find(
+      (currDay) => currDay.current_date === selectedDay,
+    );
+    if (!checkData && sectionData.length > 0) {
+      setSelectedDay(sectionData[0].current_date)
+    };
+    localStorage.setItem('currPageIndex', pageIndex.toString());
+  }, [pageIndex, pageSize, responseData, selectedDay]);
 
   // Functions to handle clicks starts
   const handleForwardArrow = () => {
-    if (pageIndex < Math.floor(responseData.length / pageSize)) {
+    if (pageIndex < Math.floor(responseData.length - myView + 1)) {
       setPageIndex(pageIndex + 1);
     }
   }
@@ -151,18 +171,22 @@ function WeatherScreen() {
   }
   const handleUnitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+    const value = e.target.value;
+    localStorage.setItem('tempUnit', value);
     setTempUnit(e.target.value);
   }
   const handleSelectDay = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
     setSelectedDay(e.currentTarget.id);
+    const currDay = e.currentTarget.id;
+    localStorage.setItem('currDay', currDay);
   }
 
   const handleRefetch = () => {
     refetch();
   }
   // End of functions to handle clicks
-  
+  console.log(responseData.length - myView + 1);
   return (
     <React.Fragment>
       {isFetching ? (
@@ -182,7 +206,7 @@ function WeatherScreen() {
             handleRight={handleForwardArrow}
             handleRefetch={handleRefetch}
             pageIndex={pageIndex}
-            maxPage={Math.floor(responseData.length / pageSize)}
+            maxPage={Math.floor(responseData.length - myView + 1)}
           />
           <CardsWrapper>
             {displayData.map((singleData) => (
